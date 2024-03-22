@@ -21,23 +21,28 @@ with original as f1, wrangled as f2:
         venue = row[8]
         currency = row[7]
         # print(currency)
+
+        print(ticker)
+
+
         contract = Stock(ticker, venue, currency)
         cntData = ib.reqContractDetails(contract)
 
 
+        close = ib.reqTickers(contract)[0].close
         mktData = ib.reqMktData(contract, '456') #456 is ib api's **convoluted*** dividend enumerated param for getting dividend data. 
-        ib.sleep(1) # give the api time fetch the data. ideally would figure out async way  #TODO
+        ib.sleep(2) # give the api time fetch the data. ideally would figure out async way  #TODO
         # print(contract)
         # print(cntData[0].contract.conId)
         # print(mktData.dividends)
 
 
         if not cntData:
-            row[6] = "none"
+            row[14] = "none"
             writer.writerow(row)
             continue
 
-
+        row[6] = close
         row[14] = contId = cntData[0].contract.conId
         row[15] = industry = cntData[0].industry
         row[16] = cntData[0].category
