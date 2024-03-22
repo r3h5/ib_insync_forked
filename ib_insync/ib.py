@@ -1137,6 +1137,8 @@ class IB:
 
         https://interactivebrokers.github.io/tws-api/market_data_type.html
         """
+        # marketDataType=3
+        print("using datatype")
         self.client.reqMarketDataType(marketDataType)
 
     def reqHeadTimeStamp(
